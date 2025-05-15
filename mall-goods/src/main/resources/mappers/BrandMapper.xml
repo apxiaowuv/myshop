@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cx.mall.goods.mapper.BrandMapper">
+
+    <!-- 按一级类 ID 查询品牌 -->
+    <select id="selectByOneCategoryId" resultType="com.cx.mall.goods.entity.Brand">
+        SELECT DISTINCT
+            a.id,
+            a.logo
+        FROM brand a JOIN category_brand c ON a.id = c.brand_id
+        WHERE c.category_id IN(
+            SELECT id FROM category WHERE parent_id IN(
+                SELECT id FROM category WHERE parent_id = #{id}
+            )
+        )
+    </select>
+    <!-- 按二级分类 ID 查询品牌 -->
+    <select id="selectByTwoCategoryId" resultType="com.cx.mall.goods.entity.Brand">
+        SELECT DISTINCT
+            a.id,
+            a.logo
+        FROM brand a JOIN category_brand c ON a.id = c.brand_id
+        WHERE c.category_id IN(
+            SELECT id FROM category WHERE parent_id = #{id}
+        )
+    </select>
+    <!-- 按三级分类 ID 查询品牌 -->
+    <select id="selectByThreeCategoryId" resultType="com.cx.mall.goods.entity.Brand">
+        SELECT DISTINCT
+            a.id,
+            a.logo
+        FROM brand a JOIN category_brand c ON a.id = c.brand_id
+        WHERE c.category_id = #{id}
+    </select>
+
+</mapper>

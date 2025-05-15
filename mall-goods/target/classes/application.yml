@@ -1,0 +1,40 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: mall-goods
+  # 配置数据源
+  datasource:
+  # 要使用的连接池实现的全限定名。默认情况下，它是从类路径自动检测到的。
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.100.104:3306/shop_goods?characterEncoding=UTF8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  # 连接池配置:
+    druid:
+    # 初始化时建立物理连接的个数
+      initial-size: 3
+    # 最大连接池数量
+      max-active: 10
+    #最小连接池数量
+      min-idle: 2
+mybatis-plus:
+#指定mapper映射文件位置
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+#默认是允许自动转换驼峰命名
+    map-underscore-to-camel-case: true
+#开启日志,便于调试
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  global-config:
+    db-config:
+      logic-delete-field: deleted # 全局逻辑删除字段名
+      logic-delete-value: 1 # 逻辑已删除值
+      logic-not-delete-value: 0 # 逻辑未删除值
+# gRPC有关的配置，这里只需要配置服务端口号默认9090
+grpc:
+  server:
+    port: 19092
+
